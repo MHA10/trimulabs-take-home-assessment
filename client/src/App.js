@@ -1,6 +1,6 @@
 import "./App.css";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
-import Jobs from "./Components/Jobs";
+import Jobs from "./Components/Jobs/Jobs";
 
 // apollo client with required uri
 const client = new ApolloClient({
