@@ -4,8 +4,14 @@ import { gql } from "@apollo/client";
 export const LOAD_JOBS = gql`
   query Jobs {
     jobs {
-      id
-      locationNames
+      title
+      isPublished
+      company {
+        name
+      }
+      userEmail
+      applyUrl
+      description
     }
   }
 `;
