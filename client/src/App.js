@@ -1,6 +1,6 @@
 import "./App.css";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
-import Jobs from "./Components/Jobs/Jobs";
+import SearchBar from "./Components/SearchBar/SearchBar";
 
 // apollo client with required uri
 const client = new ApolloClient({
@@ -11,7 +11,7 @@ const client = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={client}>
-      <Jobs />
+      <SearchBar />
     </ApolloProvider>
   );
 }
