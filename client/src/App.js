@@ -2,8 +2,8 @@ import React, { Fragment } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
-import SearchBar from "./Components/SearchBar/SearchBar";
-import JobDetail from "./Components/JobDetail/JobDetail";
+import MainPage from "./Components/MainPage/MainPage";
+import JobDetail from "./Components/Job/JobDetail/JobDetail";
 
 // apollo client with required uri
 const client = new ApolloClient({
@@ -17,7 +17,7 @@ function App() {
       <Fragment>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<SearchBar />} />
+            <Route path="/" element={<MainPage />} />
             <Route path="/detail/:id" element={<JobDetail />} />
           </Routes>
         </BrowserRouter>
