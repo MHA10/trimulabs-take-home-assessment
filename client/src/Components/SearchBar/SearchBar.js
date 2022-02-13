@@ -1,7 +1,12 @@
 import React, { Fragment, useState } from "react";
-import Jobs from "../Jobs/Jobs";
+import Jobs from "../Job/JobsList/JobsList";
 import "./SearchBar.scss";
 
+/**
+ * Search bar for filtering the jobs list
+ *
+ * @return {*}
+ */
 const SearchBar = () => {
   // initializing the state for the form data
   const [formData, setFormData] = useState({
