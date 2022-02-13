@@ -1,28 +1,23 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { LOAD_JOBS } from "../../GraphQL/Queries";
-import "./Jobs.scss";
 
-const Jobs = ({ searchQuery }) => {
+const JobDetail = () => {
+  // getting id from the url
+  const id = window.location.pathname.split("/")[2];
+
   // message to display for published/not published
   const publishedMsg = "Job is published";
   const notPublishedMsg = "Job is not published";
 
-  // fetching the data for jobs
   const { error, loading, data } = useQuery(LOAD_JOBS);
 
-  // filter the jobs based on the search query
-  // filtering based on job title and/or company name
+  // Get the specific required Job data
   const filterJobs = (data) => {
-    return data["jobs"].filter(
-      (job) =>
-        job["title"].toLowerCase().includes(searchQuery) ||
-        job["company"]["name"].toLowerCase().includes(searchQuery)
-    );
+    return data["jobs"].filter((job) => job["id"].includes(id));
   };
 
-  // render the jobs
+  // render the job
   const renderJobsData = (data) => {
     return filterJobs(data).map((job, index) => {
       return (
@@ -38,22 +33,12 @@ const Jobs = ({ searchQuery }) => {
               <p>Company: {job["company"]["name"]}</p>
               <p>User Email: {job["userEmail"]}</p>
               <p>Description:</p>
-              <p>{job["description"].split(/[.]/)[0]} ....</p>
+              <p>{job["description"]}</p>
               <a href={job["applyUrl"]} target="_blank">
                 <button type="button" className="btn btn-primary">
                   Apply here
                 </button>
               </a>
-              <Link
-                to={{
-                  pathname: `/detail/${job["id"]}`,
-                  query: job["id"],
-                }}
-              >
-                <button type="button" className="btn btn-primary btn-detail">
-                  Details
-                </button>
-              </Link>
             </div>
           </div>
         </div>
@@ -64,4 +49,4 @@ const Jobs = ({ searchQuery }) => {
   return <div>{data ? renderJobsData(data) : null}</div>;
 };
 
-export default Jobs;
+export default JobDetail;
