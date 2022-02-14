@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { LOAD_JOBS } from "../../../GraphQL/Queries";
+import JobInfo from "../JobInfo/JobInfo";
 import "./JobsList.scss";
 
 /**
@@ -12,10 +13,6 @@ import "./JobsList.scss";
  * @return {*}
  */
 const Jobs = ({ searchQuery }) => {
-  // message to display for published/not published
-  const publishedMsg = "Job is published";
-  const notPublishedMsg = "Job is not published";
-
   // fetching the jobs list from GraphQL query
   const { error, loading, data } = useQuery(LOAD_JOBS);
 
@@ -54,30 +51,9 @@ const Jobs = ({ searchQuery }) => {
         <div className="column" key={job.id}>
           <div className="card">
             <div className="container">
-              <h4>
-                <b>{job.title ? job.title : "No title"}</b>
-              </h4>
-              <p>
-                Published: {job.isPublished ? publishedMsg : notPublishedMsg}
-              </p>
-              <p>
-                Company:{" "}
-                {job.company.name ? job.company.name : "No Company Name"}
-              </p>
-              <p>
-                User Email: {job.userEmail ? job.userEmail : "No User Email"}
-              </p>
-              <p>Description:</p>
-              <p>
-                {job.description
-                  ? job.description.split(/[.]/)[0] + " ..."
-                  : "No Description"}
-              </p>
-              <a href={job.applyUrl} target="_blank">
-                <button type="button" className="btn btn-primary">
-                  Apply here
-                </button>
-              </a>
+              {/* Flag to tell from where the info component is called */}
+              {/* Passing the isFromList flag to render description accordingly*/}
+              <JobInfo job={job} isFromList={true} />
               <Link
                 to={{
                   pathname: `/detail/${job["id"]}`,

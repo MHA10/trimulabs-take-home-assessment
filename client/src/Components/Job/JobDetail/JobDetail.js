@@ -1,6 +1,8 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
 import { LOAD_JOBS } from "../../../GraphQL/Queries";
+import { useNavigate } from "react-router-dom";
+import JobInfo from "../JobInfo/JobInfo";
 
 /**
  * Job detail page
@@ -8,12 +10,11 @@ import { LOAD_JOBS } from "../../../GraphQL/Queries";
  * @return {*}
  */
 const JobDetail = () => {
+  // will use it for navigating to the previous page
+  const navigate = useNavigate();
+
   // getting id from the url
   const id = window.location.pathname.split("/")[2];
-
-  // message to display for published/not published
-  const publishedMsg = "Job is published";
-  const notPublishedMsg = "Job is not published";
 
   // fetching the jobs list from GraphQL query
   const { error, loading, data } = useQuery(LOAD_JOBS);
@@ -48,26 +49,16 @@ const JobDetail = () => {
         <div className="column" key={job.id}>
           <div className="card">
             <div className="container">
-              <h4>
-                <b>{job.title ? job.title : "No title"}</b>
-              </h4>
-              <p>
-                Published: {job.isPublished ? publishedMsg : notPublishedMsg}
-              </p>
-              <p>
-                Company:{" "}
-                {job.company.name ? job.company.name : "No Company Name"}
-              </p>
-              <p>
-                User Email: {job.userEmail ? job.userEmail : "No User Email"}
-              </p>
-              <p>Description:</p>
-              <p>{job.description ? job.description : "No Description"}</p>
-              <a href={job.applyUrl} target="_blank">
-                <button type="button" className="btn btn-primary">
-                  Apply here
-                </button>
-              </a>
+              <button
+                type="button"
+                className="btn btn-primary btn-detail-back"
+                onClick={() => navigate(-1)}
+              >
+                Back
+              </button>
+              {/* Flag to tell from where the info component is called */}
+              {/* Passing the isFromList flag to render description accordingly*/}
+              <JobInfo job={job} isFromList={false} />
             </div>
           </div>
         </div>
